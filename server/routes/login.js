@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const app = express();
 
-app.get("/login", function (req, res) {
+app.post("/login", function (req, res) {
   let body = req.body;
 
   User.findOne({ email: body.email }, (err, userDB) => {
