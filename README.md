@@ -1,6 +1,6 @@
 # Tasks app server
 
-## Usage:
+Usage:
 
 #### `$ npm i`
 
