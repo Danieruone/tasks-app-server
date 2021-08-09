@@ -8,26 +8,24 @@ const { verifyToken } = require("../middlewares/authentication");
 const app = express();
 
 app.get("/task", [verifyToken], function (req, res) {
-  let from = req.query.from || 0;
-  let limit = req.query.limit || 5;
-  Task.find({}, "user_id name status")
-    .skip(Number(from))
-    .limit(Number(limit))
-    .exec((err, tasks) => {
+  console.log(req.user);
+  Task.find({ user_id: req.user._id }, "user_id name status").exec(
+    (err, tasks) => {
       if (err) {
         return res.status(400).json({
           ok: false,
           err,
         });
       }
-      Task.count({}, (err, count) => {
+      Task.count({ user_id: req.user._id }, (err, count) => {
         res.json({
           ok: true,
           tasks,
           numberOfTasks: count,
         });
       });
-    });
+    }
+  );
 });
 
 app.post("/task", function (req, res) {
